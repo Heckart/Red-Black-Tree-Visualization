@@ -43,7 +43,8 @@ void insert(redBlackTree* tree, int data)
     if (tree->root == NULL)
     {
         tree->root = newNode;
-    } else
+    } 
+    else
     {
         treeNode* current = tree->root;
         treeNode* parent = NULL;
@@ -53,19 +54,26 @@ void insert(redBlackTree* tree, int data)
             if (newNode->data < current->data)
             {
                 current = current->left;
-            } else
+            } 
+            else
             {
                 current = current->right;
             }
         }
+        
         newNode->parent = parent;
-        if (newNode->data < parent->data)
+        
+        if (parent != NULL) // Check if parent is not NULL to satisfy a cppcheck warning. In practice, this condition should always be true.
         {
-            parent->left = newNode;
-        } else
-        {
-            parent->right = newNode;
-        }   
+            if (newNode->data < parent->data)
+            {
+                parent->left = newNode;
+            } 
+            else
+            {
+                parent->right = newNode;
+            }   
+        }
     }
     
     newNode->color = RED;
@@ -92,7 +100,8 @@ void fixViolationsAfterInsertion(redBlackTree* tree, treeNode* node)
                 parent->color = BLACK;
                 uncle->color = BLACK;
                 node = grandparent;
-            } else
+            } 
+            else
             {
                 // Left-right
                 if (node == parent->right)
@@ -108,7 +117,8 @@ void fixViolationsAfterInsertion(redBlackTree* tree, treeNode* node)
                 grandparent->color = tempColor;
                 node = parent;
             }
-        } else
+        } 
+        else
         {
             treeNode* uncle = grandparent->left;
             // if uncle is red, only recolor
@@ -118,7 +128,8 @@ void fixViolationsAfterInsertion(redBlackTree* tree, treeNode* node)
                 parent->color = BLACK;
                 uncle->color = BLACK;
                 node = grandparent;
-            } else
+            } 
+            else
             {
                 // Right-left
                 if (node == parent->left)
@@ -155,10 +166,12 @@ void leftRotate(treeNode** root, treeNode* x)
     if (x->parent == NULL) // if x is root
     {
         *root = y;
-    } else if (x == x->parent->left) // if x is left child
+    } 
+    else if (x == x->parent->left) // if x is left child
     {
         x->parent->left = y;
-    } else // if x is right child
+    } 
+    else // if x is right child
     {
         x->parent->right = y;
     }
@@ -183,10 +196,12 @@ void rightRotate(treeNode** root, treeNode* y)
     if (y->parent == NULL) // if y is root
     {
         *root = x;
-    } else if (y == y->parent->left) // if y is left child
+    } 
+    else if (y == y->parent->left) // if y is left child
     {
         y->parent->right = x;
-    } else // if y is right child
+    } 
+    else // if y is right child
     {
         y->parent->right = x;
     }
@@ -353,9 +368,11 @@ Color getColor(const treeNode *node)
     {
         // in a Red-Black tree, a NULL node is typically considered black
         return BLACK;
-
+    } 
+    else
+    {
         return node->color;
-    }  
+    }     
 }
 
 // Additional features
@@ -364,7 +381,8 @@ bool isEmpty(const redBlackTree *tree)
     if (tree->root == NULL)
     {
         return true;
-    } else return false;
+    } 
+    else return false;
 }
 
 
