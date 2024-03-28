@@ -2,6 +2,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+
 // Initialization
 redBlackTree* initializeTree()
 {
@@ -149,6 +150,155 @@ void fixViolationsAfterInsertion(redBlackTree* tree, treeNode* node)
     }
 }
 
+
+
+void deleteNode(redBlackTree* tree, int data)
+{
+    treeNode* nodeToDelete = search(tree->root, data);
+    if (nodeToDelete == NULL)
+    {
+        printf("The node does not exist!\n");
+        return;
+    }
+    
+    treeNode* x;
+    treeNode* y = nodeToDelete;
+    Color originalColor = y->color;
+    if (nodeToDelete->left == NULL)
+    {
+        x = nodeToDelete->right;
+        rbTransplant(tree, nodeToDelete, nodeToDelete->right);
+    }
+    else if (nodeToDelete->right == NULL)
+    {
+        x = nodeToDelete->left;
+        rbTransplant(tree, nodeToDelete, nodeToDelete->left);
+    }
+    else
+    {
+        y = getMinimum(nodeToDelete->right);
+        originalColor = y->color;
+        x = y->right;
+        if (y->parent == nodeToDelete)
+        {
+            if (x) x-> parent = y;
+        }
+        else
+        {
+            rbTransplant(tree, y, y->right);
+            y->right = nodeToDelete->right;
+            y->right->parent = y;
+        }
+        rbTransplant(tree, nodeToDelete, y);
+        y->left = nodeToDelete->left;
+        y->left->parent = y;
+        y->color = nodeToDelete->color;
+    }
+    
+    free(nodeToDelete);
+    
+    if (originalColor == BLACK)
+    {
+        fixViolationsAfterDeletion(tree, x);
+    }
+}
+
+void fixViolationsAfterDeletion(redBlackTree* tree, treeNode* x)
+{
+    while (x != tree->root && getColor(x) == BLACK)
+    {
+        if (x == x->parent->left)
+        {
+            treeNode* w = x->parent->right;
+            if (getColor(w) == RED)
+            {
+                w->color = BLACK;
+                x->parent->color = RED;
+                leftRotate(&tree->root, x->parent);
+                w = x->parent->right;
+            }
+            if (getColor(w->left) == BLACK && getColor(w->right) == BLACK)
+            {
+                w->color = RED;
+                x = x->parent;
+            }
+            else
+            {
+                if (getColor(w->right) == BLACK)
+                {
+                    w->left->color = BLACK;
+                    w->color = RED;
+                    rightRotate(&tree->root, w);
+                    w = x->parent->right;
+                }
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->right->color = BLACK;
+                leftRotate(&tree->root, x->parent);
+                x = tree->root;
+            }
+            
+        }
+        else
+        {
+            treeNode* w = x->parent->left;
+            if (getColor(w) == RED)
+            {
+                w->color = BLACK;
+                x->parent->color = RED;
+                rightRotate(&tree->root, x->parent);
+                w = x->parent->left;
+            }
+            if (getColor(w->right) == BLACK && getColor(w->left) == BLACK)
+            {
+                w->color = RED;
+                x = x->parent;
+            }
+            else
+            {
+                if (getColor(w->left) == BLACK)
+                {
+                    w->right->color = BLACK;
+                    w->color = RED;
+                    leftRotate(&tree->root, w);
+                    w = x->parent->left;
+                }
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->left->color = BLACK;
+                rightRotate(&tree->root, x->parent);
+                x = tree->root;
+            }   
+        }   
+    }
+   x->color = BLACK; 
+}
+
+void rbTransplant(redBlackTree* tree, treeNode* u, treeNode* v)
+{
+    // if u is the root
+    if (u->parent == NULL)
+    {
+        tree->root = v;
+    }
+    // if u is the left child of its parent
+    else if (u == u->parent->left)
+    {
+        u->parent->left = v;
+    }
+    // if u is the right child of its parent
+    else
+    {
+        u->parent->right = v;
+    }
+    if (v != NULL)
+    {
+        v->parent = u->parent;
+    }
+}
+
+
+
 // Rotation functions
 void leftRotate(treeNode** root, treeNode* x)
 {
@@ -287,7 +437,59 @@ void levelOrderTraversal(const treeNode* root)
 
 
 
+// search function
+treeNode* search(treeNode* root, int data)
+{
+    treeNode* current = root;
+    while (current != NULL && current->data != data)
+    {
+        if (data < current->data)
+        {
+            current = current->left;
+        }
+        else
+        {
+            current = current->right;
+        }
+    }
+    return current; // this will be NULL if not found
+}
+
+
+
 // Utility functions
+treeNode* getMinimum(treeNode* root)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+
+    treeNode* current = root;
+
+    while (current->left != NULL)
+    {
+        current = current->left;
+    }
+    return current;
+}
+
+treeNode* getMaximum(treeNode* root)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+    
+    treeNode* current = root;
+
+    while (current->right != NULL)
+    {
+        current = current->right;
+    }
+    return current;
+}
+
 treeNode* getSuccessor(const treeNode* node)
 {
     if (node == NULL) return NULL;
@@ -375,7 +577,70 @@ Color getColor(const treeNode *node)
     }     
 }
 
+
+
+// Destruction functions
+void freeTreeNodes(treeNode* node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+    
+    freeTreeNodes(node->left);
+    freeTreeNodes(node->right);
+    free(node);
+}
+
+void freeTree(redBlackTree* tree)
+{
+    if (tree == NULL)
+    {
+        return;
+    }
+
+    freeTreeNodes(tree->root);
+    free(tree);
+    tree = NULL;
+}
+
+
+
 // Additional features
+int height(const treeNode* node)
+{
+    if (node == NULL)
+    {
+        return -1; // by convention the height of a negative tree is considered -1
+    }
+    else
+    {
+        int leftHeight = height(node->left);
+        int rightHeight = height(node->right);
+
+        if (leftHeight > rightHeight)
+        {
+            return leftHeight + 1;
+        }
+        else
+        {
+            return rightHeight + 1;
+        }
+    }
+}
+
+int size(const treeNode* node)
+{
+    if (node == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        return size(node->left) + 1 + size(node->right);
+    }
+}
+
 bool isEmpty(const redBlackTree *tree)
 {
     if (tree->root == NULL)
@@ -383,6 +648,34 @@ bool isEmpty(const redBlackTree *tree)
         return true;
     } 
     else return false;
+}
+
+void printTreeHelper(const treeNode* node, int space)
+{
+    int i;
+    if (node == NULL)
+    {
+        return;
+    }
+    
+    space += 5; // increase space between levels
+
+    printTreeHelper(node->right, space); // process right child first
+
+    printf("\n");
+    for (i = 5; i < space; i++)
+    {
+        printf(" ");
+    }
+    printf("%d(%s)\n", node->data, node->color == RED ? "R" : "B");
+
+    // Proces left child
+    printTreeHelper(node->left, space);
+}
+
+void printTree(const redBlackTree* tree)
+{
+    printTreeHelper(tree->root, 0);
 }
 
 

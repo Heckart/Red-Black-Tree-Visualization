@@ -4,6 +4,8 @@
 #include "stdbool.h"
 #include "stddef.h"
 
+// treeNode and root struct
+
 typedef enum Color {RED, BLACK} Color;
 
 typedef struct treeNode 
@@ -22,9 +24,10 @@ typedef struct redBlackTree
     /*
     * having a redBlackTree struct allows us to store more metadata
     * that we may want to have quick access (O(1)) to in the future, 
-    * such as a treeSize variable
+    * such as a treeSize variable, max, or min.
     */
 } redBlackTree;
+
 
 
 // Initialization
@@ -48,6 +51,18 @@ void insert(redBlackTree* tree, int data);
 
 // fix color and strucutral violations after insertion
 void fixViolationsAfterInsertion(redBlackTree* tree, treeNode* node);
+
+
+// Deletion
+
+// search for a node with given value and delete it
+void deleteNode(redBlackTree* tree, int data);
+
+// fix color and structural violations after deletion
+void fixViolationsAfterDeletion(redBlackTree* tree, treeNode* x);
+
+// maintain binary tree structure during deletions
+void rbTransplant(redBlackTree* tree, treeNode* u, treeNode* v);
 
 
 
@@ -77,7 +92,20 @@ void levelOrderTraversal(const treeNode* root);
 
 
 
+// search function
+
+// standard BST search algorithm
+treeNode* search(treeNode* root, int data);
+
+
+
 // Utility functions
+
+// returns the node with the minimum element
+treeNode* getMinimum(treeNode* root);
+
+// returns the node with the maximum element
+treeNode* getMaximum(treeNode* root);
 
 // returns the in-order successor of the given node
 treeNode* getSuccessor(const treeNode* node);
@@ -96,10 +124,32 @@ Color getColor(const treeNode* node);
 
 
 
+// Destruction functions
+
+// helper function for freeTree() that recursively frees all nodes
+void freeTreeNodes(treeNode* node);
+
+// frees all nodes and destroys the tree
+void freeTree(redBlackTree* tree);
+
+
+
 // Additional features
+
+// Returns the height of the tree
+int height(const treeNode* node);
+
+// Returns the number of nodes in the tree
+int size(const treeNode* node);
 
 // Returns true if tree is empty
 bool isEmpty(const redBlackTree* tree);
+
+// helper fuction for printTree
+void printTreeHelper(const treeNode* node, int space);
+
+// pretty prints the Red-Black tree top down
+void printTree(const redBlackTree* tree);
 
 
 
