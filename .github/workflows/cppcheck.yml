@@ -13,8 +13,13 @@ jobs:
     - name: Install cppcheck
       run: sudo apt-get install cppcheck
 
-    - name: Run cppcheck
-      run: cppcheck --output-file=cppcheck_report.txt .
+    - name: Run cppcheck and check for issues
+      run: |
+        cppcheck --output-file=cppcheck_report.txt .
+        if [ -s cppcheck_report.txt ]; then
+          echo "Issues found by cppcheck."
+          exit 1
+        fi
 
     - name: Upload cppcheck report
       uses: actions/upload-artifact@v3
