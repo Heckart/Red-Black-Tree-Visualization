@@ -11,13 +11,13 @@ redBlackTree* initializeTree() {
         return NULL;
     }
     
-
     treeNode *sentinel = (treeNode*)malloc(sizeof(treeNode));
     if (sentinel == NULL) {
         printf("sentinel was not allocated and the new tree was not created\n");
         free(tree);
         return NULL;
     }
+
     sentinel->color = BLACK; // the sentinel is black by convention
     sentinel->left = sentinel;
     sentinel->right = sentinel;
