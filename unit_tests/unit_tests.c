@@ -1,6 +1,5 @@
 #include "red_black_tree.h"
 #include "unit_tests.h"
-
 #include "assert.h"
 #include "stdio.h"
 
@@ -152,14 +151,36 @@ void testRootDeletetion() {
     printf("testRootDeletion passed.\n");
 }
 
+void testSearch() {
+    redBlackTree *tree = initializeTree();
+
+    rbInsert(tree, 42);
+    rbInsert(tree, 77);
+    rbInsert(tree, 13);
+    rbInsert(tree, 5);
+    rbInsert(tree, 100);
+
+    treeNode* valid = rbTreeSearch(tree, 77);
+    assert(valid->key == 77); 
+    treeNode* invalid = rbTreeSearch(tree, 78);
+    assert(invalid == tree->nil);
+
+    destroyTree(tree);
+
+    printf("testSearch passed.\n");
+}
+
 int main()
 {
     // insertion tests
     testInsertMaxMin();
     testInsertRequiringRecoloring();
     testInsertionBalanceColor();
+    // deletion tests
     testBasicDeletion();
     testRootDeletetion();
+    // auxiliary test
+    testSearch();
 
     return 0;
 }

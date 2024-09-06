@@ -1,8 +1,6 @@
 #ifndef UNIT_TESTS
 #define UNIT_TESTS
 
-// insertion tests
-
 // ensure that the tree correctly maintains the minimum and maximum elements
 void testInsertMaxMin();
 
@@ -17,4 +15,7 @@ void testBasicDeletion();
 
 // ensure that the tree maintains properties after deleting the root with 1 and 2 children
 void testRootDeletion();
+
+// ensure search function can properly find values and returns nil when necessary
+void testSearch();
 #endif
