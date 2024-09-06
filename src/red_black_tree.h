@@ -195,4 +195,18 @@ void destroyTreeHelper(treeNode *node, treeNode *nil);
 */
 void destroyTree(redBlackTree *tree);
 
+/**
+ * @brief Searches a red black tree for a node containing the given key.
+ * 
+ * This iterative solution runs faster on many systems than the recursive solution.
+ * 
+ * Runs in O(log(n)) on Red-Black Trees, but only O(h) in a regular BST.
+ * 
+ * @param *tree The redBlackTree being searched.
+ * @param key The value being searched for.
+ * 
+ * @returns a pointer to a treeNode if the value is found, otherwise returns a pointer to a NIL node.
+*/
+treeNode* rbTreeSearch(redBlackTree *tree, int key);
+
 #endif

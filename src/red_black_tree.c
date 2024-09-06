@@ -1,4 +1,5 @@
 #include "red_black_tree.h"
+#include "gtkBackend.h"
 
 #include "stdlib.h"
 #include "stdio.h"
@@ -125,6 +126,8 @@ void rbInsert(redBlackTree* tree, int data) {
     z->color = RED;
 
     rbInsertFixup(tree, z);   
+
+    gtk_widget_queue_draw(drawing_area);
 }
 
 void rbInsertFixup(redBlackTree *tree, treeNode *z) {
@@ -337,4 +340,18 @@ void destroyTree(redBlackTree *tree) {
 
     // tree struct itself is dynamically allocated, so it must be freed
     free(tree);
+}
+
+treeNode* rbTreeSearch(redBlackTree *tree, int key) {
+    treeNode *x = tree->root;
+
+    while (x != tree->nil && key != x->key) {
+        if (key < x->key) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+    
+    return x;
 }
