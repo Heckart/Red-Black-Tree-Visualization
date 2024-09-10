@@ -107,7 +107,7 @@ void rbInsertFixup(redBlackTree *tree, treeNode *z);
  * 
  * @return A pointer to the treeNode with the maximum value.
 */
-treeNode *rbMaximum(redBlackTree *tree, treeNode *node);
+treeNode *rbMaximum(const redBlackTree *tree, treeNode *node);
 
 /**
  * @brief Finds and returns the treeNode in a redBlackTree subtree rooted at *node with the min value.
@@ -121,7 +121,7 @@ treeNode *rbMaximum(redBlackTree *tree, treeNode *node);
  * 
  * @return A pointer to the treeNode with the minimum value.
 */
-treeNode *rbMinimum(redBlackTree *tree, treeNode *node);
+treeNode *rbMinimum(const redBlackTree *tree, treeNode *node);
 
 /**
  * @brief Replaces the subtree rooted at *u with the subtree rooted at *v.

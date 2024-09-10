@@ -8,15 +8,15 @@ GtkWidget *drawing_area;
 GtkWidget *entry;
 redBlackTree *tree;
 
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-  redBlackTree *tree = (redBlackTree *)user_data; // Pass the tree as user_data
+static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, const gpointer USER_DATA) { 
+  redBlackTree *tree = (redBlackTree *)USER_DATA; // Pass the tree as user_data
   draw_tree(cr, tree);
   return FALSE;
 }
 
-static void on_entry_activate(GtkEntry *entry, gpointer user_data) {
+static void on_entry_activate(GtkEntry *entry, const gpointer USER_DATA) {
     const gchar *text = gtk_entry_get_text(entry);
-    int input = atoi(text); // convet text input to integer TODO: protect against CWE-190
+    int input = safe_stoi(text); // convert text input to integer 
 
     rbInsert(tree, input);
 
@@ -58,6 +58,7 @@ int main(int argc, char* argv[])
     // start the GTK main loop
     gtk_main();
 
-    destroyTree(tree);
+    destroyTree(tree); 
+    
     return 0;
 }

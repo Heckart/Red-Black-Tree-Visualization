@@ -1,6 +1,9 @@
 #include "gtkBackend.h"
+#include <limits.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-void draw_node(cairo_t *cr, redBlackTree *tree, treeNode *node, int x, int y, int x_offset, int depth) {
+void draw_node(cairo_t *cr, redBlackTree *tree, treeNode *node, const int x, const int y, const int x_offset, const int depth) {
     if (node == NULL || node == tree->nil) return;
 
     // Set the color based on the node's color
@@ -15,7 +18,7 @@ void draw_node(cairo_t *cr, redBlackTree *tree, treeNode *node, int x, int y, in
     cairo_fill(cr);
 
     // Prepare the text for the node's key
-    char key_str[12]; // Buffer large enough for an integer TODO: protect against CWE-119/CWE-120
+    char key_str[12]; // flawfinder: ignore (snprintf is protecting against buffer overflows) 
     snprintf(key_str, sizeof(key_str), "%d", node->key);
 
     // measure the text to center it
@@ -30,9 +33,9 @@ void draw_node(cairo_t *cr, redBlackTree *tree, treeNode *node, int x, int y, in
     cairo_show_text(cr, key_str); 
 
     // Calculate positions for left and right children
-    int child_y = y + 70;                    // Vertical distance between levels
-    int left_x = x - x_offset;               // Horizontal offset for left child
-    int right_x = x + x_offset;              // Horizontal offset for right child
+    const int child_y = y + 70;                    // Vertical distance between levels
+    const int left_x = x - x_offset;               // Horizontal offset for left child
+    const int right_x = x + x_offset;              // Horizontal offset for right child
 
     // Draw lines connecting to the left and right children
     if (node->left != tree->nil) {
@@ -55,9 +58,24 @@ void draw_tree(cairo_t *cr, redBlackTree *tree) {
     if (tree->root == tree->nil) return; // Tree is empty
 
     // Initial position and offset for the root node
-    int initial_x = 400;    // Start drawing in the middle of the canvas
-    int initial_y = 50;     // Start drawing from the top of the canvas
-    int x_offset = 200;     // Initial horizontal offset between child nodes
+    const int initial_x = 400;    // Start drawing in the middle of the canvas
+    const int initial_y = 50;     // Start drawing from the top of the canvas
+    const int x_offset = 200;     // Initial horizontal offset between child nodes
 
     draw_node(cr, tree, tree->root, initial_x, initial_y, x_offset, 0);
+}
+
+int safe_stoi(const char *str) {
+    char* endptr;
+    const int BASE = 10;
+    
+    long long val = strtoll(str, &endptr, BASE);
+
+    // overflow check
+    if (val > INT_MAX || val < INT_MIN) {
+      printf("\nInteger overflow, value inserted as a 0");
+      return 0;
+    }
+
+    return (int)val;
 }

@@ -177,7 +177,7 @@ void rbInsertFixup(redBlackTree *tree, treeNode *z) {
     tree->root->color = BLACK;
 }
 
-treeNode *rbMaximum(redBlackTree *tree, treeNode *node)
+treeNode *rbMaximum(const redBlackTree *tree, treeNode *node)
 {
     while (node->right != tree->nil) {
         node = node->right;
@@ -185,7 +185,7 @@ treeNode *rbMaximum(redBlackTree *tree, treeNode *node)
     return node;
 }
 
-treeNode *rbMinimum(redBlackTree *tree, treeNode *node) {
+treeNode *rbMinimum(const redBlackTree *tree, treeNode *node) {
     while (node->left != tree->nil) {
         node = node->left;
     }

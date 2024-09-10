@@ -6,7 +6,9 @@
 
 extern GtkWidget *drawing_area; 
 
-void draw_node(cairo_t *cr, redBlackTree *tree, treeNode *node, int x, int y, int x_offset, int depth);
+void draw_node(cairo_t *cr, redBlackTree *tree, treeNode *node, const int x, const int y, const int x_offset, const int depth);
 void draw_tree(cairo_t *cr, redBlackTree *tree);
+
+int safe_stoi(const char *str);
 
 #endif
