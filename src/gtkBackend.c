@@ -69,11 +69,11 @@ int safe_stoi(const char *str) {
     char* endptr;
     const int BASE = 10;
     
-    long long val = strtoll(str, &endptr, BASE);
+    const long long val = strtoll(str, &endptr, BASE);
 
     // overflow check
     if (val > INT_MAX || val < INT_MIN) {
-      printf("\nInteger overflow, value inserted as a 0");
+      fprintf(stderr, "Integer overflow, value inserted as a 0\n");
       return 0;
     }
 

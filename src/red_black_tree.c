@@ -8,13 +8,13 @@ redBlackTree* initializeTree() {
     redBlackTree *tree = (redBlackTree*)malloc(sizeof(redBlackTree));
     // handle memory allocation failure
     if (tree == NULL) {
-        printf("tree was not allocated and the new tree was not created\n");
+        fprintf(stderr, "tree was not allocated and the new tree was not created\n");
         return NULL;
     }
     
     treeNode *sentinel = (treeNode*)malloc(sizeof(treeNode));
     if (sentinel == NULL) {
-        printf("sentinel was not allocated and the new tree was not created\n");
+        fprintf(stderr, "sentinel was not allocated and the new tree was not created\n");
         free(tree);
         return NULL;
     }
@@ -88,7 +88,7 @@ void rbInsert(redBlackTree* tree, int data) {
     treeNode *z = (treeNode*)malloc(sizeof(treeNode));
     // handle memory allocation failure
     if (z == NULL) {
-        printf("The memory allocation failed. The value has not been inserted\n");
+        fprintf(stderr, "The memory allocation failed. The value has not been inserted\n");
         return;
     }
     
