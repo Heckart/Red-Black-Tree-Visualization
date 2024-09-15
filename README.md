@@ -25,3 +25,5 @@ The following functions have been implented in the `red_black_tree.h` file:
 
 ## Visualization
 The visualier uses GTK3 for the GUI, so GTK3 will need to be installed on your system in order for the program to run. The bottom text box is where number are entered to be inserted. Currently, the program only visualizes the state of the tree after each insetion. In the future, there are plans to allow visualization of the other operations, as well showing the intermediate steps of each operation.
+
+To compile the program with GCC, I suggest using the following command: gcc -g3 ./src/*.c -I./src `pkg-config --cflags --libs gtk+-3.0`
