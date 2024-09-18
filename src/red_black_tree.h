@@ -1,6 +1,8 @@
 #ifndef RED_BLACK_TREE
 #define RED_BLACK_TREE
 
+#include <stdbool.h>
+
 typedef enum Color {RED, BLACK} Color;
 
 typedef struct treeNode {
@@ -55,7 +57,7 @@ void leftRotate(redBlackTree *tree, treeNode *x);
  * 
  * @note This function should run automatically as a part of rbInsertFixup() or rbDeleteFixup().
  * It should not be called on its own.
- * 
+* 
  * @param *tree The redBlackTree which treeNode x belongs to.
  * @param *x The treeNode to be rotated.
  * 
@@ -74,7 +76,7 @@ void rightRotate(redBlackTree *tree, treeNode *x);
  * 
  * @return Nothing. If a memory allocation fails, an error message is printed and the node is not inserted.
 */
-void rbInsert(redBlackTree *tree, int data);
+void rbInsert(redBlackTree *tree, const int data);
 
 /**
  * @brief Auxiliary function for rbInsert(). Maintains Red-Black properties after insertion. 
@@ -205,8 +207,78 @@ void destroyTree(redBlackTree *tree);
  * @param *tree The redBlackTree being searched.
  * @param key The value being searched for.
  * 
- * @returns a pointer to a treeNode if the value is found, otherwise returns a pointer to a NIL node.
+ * @returns A pointer to a treeNode if the value is found, otherwise returns a pointer to a NIL node.
 */
 treeNode* rbTreeSearch(redBlackTree *tree, int key);
+
+/**
+ * @brief Determines whether a given node's color is BLACK.
+ *
+ * Runs in O(1).
+ *
+ * @param *node The node being examined.
+ *
+ * @returns true if the node's color is BLACK, else returns false.
+*/
+bool isBlack(const treeNode *node);
+
+/**
+ * @brief Determines whether a given node's color is RED.
+ *
+ * Runs in O(1).
+ *
+ * @param *node The node being examined.
+ *
+ * @returns true if the node's color is RED, else returns false.
+*/
+bool isRed(const treeNode *node);
+
+/**
+ * @brief Finds the color of a given node.
+ *
+ * Runs in O(1).
+ * 
+ * @param *node The node being examined.
+ *
+ * @returns The color of the node.
+*/
+Color findColor(const treeNode *node);
+
+/**
+ * @brief Recursively finds the largest number of edges from the given root to a leaf.
+ *
+ * @note Pass in the root node for the height of the whole tree.
+ *
+ * Runs in O(n).
+ *
+ * @param *node The root of the subtree whose height is being calculated.
+ *
+ * @return The height of a subtree as an int.
+*/
+int height(redBlackTree *tree, treeNode *node);
+
+/**
+ * @brief Recursively finds the number of nodes in a given subtree.
+ *
+ * @note Pass in the root node for the size of the whole tree.
+ *
+ * Runs in O(n).
+ *
+ * @param *node The root of the subtree whose size is being calculated.
+ *
+ * @return The number of nodes in a subtree as an int.
+*/
+int size(redBlackTree *tree, treeNode *node);
+
+/**
+ * @brief Checks if a redBlackTree has no nodes.
+ *
+ * Runs in O(1).
+ *
+ * @param *tree The redBlackTree being analyzed.
+ *
+ * @return true if the tree is empty, else returns false. 
+ */
+bool isEmpty(redBlackTree *tree);
 
 #endif

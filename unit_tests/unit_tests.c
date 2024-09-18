@@ -170,6 +170,43 @@ void testSearch() {
     printf("testSearch passed.\n");
 }
 
+void testSizeHeight() {
+    redBlackTree *tree = initializeTree();
+
+    int treeHeight = height(tree, tree->root);
+    int treeSize = size(tree, tree->root);
+
+    assert(isEmpty(tree));
+    assert(treeHeight == -1);
+    assert(treeSize == 0);
+    
+    rbInsert(tree, 1);
+
+    treeHeight = height(tree, tree->root);
+    treeSize = size(tree, tree->root);
+
+    assert(!isEmpty(tree));
+    assert(treeHeight == 0);
+    assert(treeSize == 1);
+
+    rbInsert(tree, 2);
+    rbInsert(tree, 3);
+    rbInsert(tree, 4);
+    rbInsert(tree, 5);
+    rbInsert(tree, 6);
+    rbInsert(tree, 7);
+
+    treeHeight = height(tree, tree->root);
+    treeSize = size(tree, tree->root);
+
+    assert(treeHeight == 3);
+    assert(treeSize == 7);
+
+    destroyTree(tree);
+
+    printf("testSizeHeight passed.\n");
+}
+
 int main()
 {
     // insertion tests
@@ -181,6 +218,6 @@ int main()
     testRootDeletetion();
     // auxiliary test
     testSearch();
-
+    testSizeHeight(); 
     return 0;
 }

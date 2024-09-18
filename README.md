@@ -20,10 +20,18 @@ The following functions have been implented in the `red_black_tree.h` file:
 | rbTransplant() | O(1) | Replaces a subtree with a subtree rooted at a different point. |
 | rbDelete() | O(log(n)) | Deletes a node with the given data from the tree. |
 | rbDeleteFixup() | O(log(n)) | Fixes any color and structural violations after deletion. |
-| destroyTree() | O(n) | calls destroyTreeHelper() and deletes frees the root. |
-| destroyTreeHelper() | O(n) | recursively frees a node and the node's subtree. |
+| destroyTree() | O(n) | Calls destroyTreeHelper() and frees the root. |
+| destroyTreeHelper() | O(n) | Recursively frees a node and the node's subtree. |
+| isBlack() | O(1) | Finds if a given node is BLACK. |
+| isRed() | O(1) | Finds if a given node is RED. |
+| findColor() | O(1) | Returns the color of a given node. |
+| height() | O(n) | Returns the largest number of edges from a given node to a leaf. |
+| size() | O(n) | Returns the number nodes in a given subtree. |
+| isEmprty() | O(1) | Finds if a given tree is empty (root = nil). |
 
 ## Visualization
 The visualier uses GTK3 for the GUI, so GTK3 will need to be installed on your system in order for the program to run. The bottom text box is where number are entered to be inserted. Currently, the program only visualizes the state of the tree after each insetion. In the future, there are plans to allow visualization of the other operations, as well showing the intermediate steps of each operation.
+
+![GUI example](GUI.png "GUI example")
 
 To compile the program with GCC, I suggest using the following command: gcc -g3 ./src/*.c -I./src `pkg-config --cflags --libs gtk+-3.0`

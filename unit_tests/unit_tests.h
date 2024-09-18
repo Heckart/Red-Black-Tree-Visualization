@@ -1,6 +1,8 @@
 #ifndef UNIT_TESTS
 #define UNIT_TESTS
 
+/* NOTE: unit tests are for testing the Red-Black Tree itself, not the GUI. GUI elements should be commented from red_black_tree.c before running these tests. */
+
 // ensure that the tree correctly maintains the minimum and maximum elements
 void testInsertMaxMin();
 
@@ -18,4 +20,7 @@ void testRootDeletion();
 
 // ensure search function can properly find values and returns nil when necessary
 void testSearch();
+
+// ensure the size() and height() functions return the correct values
+void testSizeHeight();
 #endif

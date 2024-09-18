@@ -78,7 +78,7 @@ void rightRotate(redBlackTree *tree, treeNode *x) {
     x->parent = y;
 }
 
-void rbInsert(redBlackTree* tree, int data) {
+void rbInsert(redBlackTree* tree, const int data) {
     /* the structure of this red-black tree (NULL's pointing to a common sentinel) means
     *  a createNode function isn't useful, since we would still need to point right, left
     *  and parent toward tree->nil at the start of the rbInsert function; therefore, we are
@@ -354,4 +354,50 @@ treeNode* rbTreeSearch(redBlackTree *tree, int key) {
     }
     
     return x;
+}
+
+bool isBlack(const treeNode *node) {
+    return (node->color == BLACK);
+}
+
+bool isRed(const treeNode *node) {
+    return (node->color == RED);
+}
+
+Color findColor(const treeNode *node) {
+    return node->color;
+}
+
+int height(redBlackTree *tree, treeNode *node) {
+    // base case
+   if (node == tree->nil) {
+      return -1;
+    }
+
+    // recursive case
+   int leftHeight = height(tree, node->left);
+   int rightHeight = height(tree, node->right);
+
+    if (leftHeight >= rightHeight) {
+      return 1+leftHeight;
+    }
+
+    return 1+rightHeight;
+}
+
+int size(redBlackTree *tree, treeNode *node) {
+    // base case
+    if (node == tree->nil) {
+      return 0;
+    }
+
+    // recursive case
+    int leftSise = size(tree, node->left);
+    int rightSize = size(tree, node->right);
+
+    return 1 + leftSise + rightSize;
+}
+
+bool isEmpty(redBlackTree *tree) {
+  return (tree->root == tree->nil); 
 }
