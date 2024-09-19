@@ -1,4 +1,4 @@
-#ifndef RED_BLACK_TREE
+#fndef RED_BLACK_TREE
 #define RED_BLACK_TREE
 
 #include <stdbool.h>
@@ -251,6 +251,7 @@ Color findColor(const treeNode *node);
  *
  * Runs in O(n).
  *
+ * @param *tree The tree whose height is being found (used to know sentinel).
  * @param *node The root of the subtree whose height is being calculated.
  *
  * @return The height of a subtree as an int.
@@ -264,6 +265,7 @@ int height(redBlackTree *tree, treeNode *node);
  *
  * Runs in O(n).
  *
+ * @param *tree The tree whose height is being found (used to know sentinel).
  * @param *node The root of the subtree whose size is being calculated.
  *
  * @return The number of nodes in a subtree as an int.

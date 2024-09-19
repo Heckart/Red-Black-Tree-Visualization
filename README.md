@@ -6,7 +6,7 @@ A red-black tree is a binary search tree with one extra bit of storage per node:
 
 Because of this color property, the height of a red-black tree with $`n`$ keys is at most $`2log(n+1)`$ which is $`O(log(n))`$. Further, insertion, searching, and deletion have a worst case time complexity of $`O(log(n))`$ on red-black trees, whereas those operations take $`O(n)`$ time on binary search trees.
 
-The following functions have been implented in the `red_black_tree.h` file:
+The following functions have been implented in the `red_black_tree.c` file:
 
 | Name | Complexity | Purpose |
 | -------- | ------- | ------- | 
@@ -30,8 +30,8 @@ The following functions have been implented in the `red_black_tree.h` file:
 | isEmprty() | O(1) | Finds if a given tree is empty (root = nil). |
 
 ## Visualization
-The visualier uses GTK3 for the GUI, so GTK3 will need to be installed on your system in order for the program to run. The bottom text box is where number are entered to be inserted. Currently, the program only visualizes the state of the tree after each insetion. In the future, there are plans to allow visualization of the other operations, as well showing the intermediate steps of each operation.
+The visualizer uses GTK3 for the GUI, so GTK3 will need to be installed on your system in order for the program to run. The bottom text box is where numbers are entered to be inserted. Currently, the program only visualizes the state of the tree after each insertion. In the future, there are plans to allow visualization of the other operations, as well showing the intermediate steps of each operation.
 
 ![GUI example](GUI.png "GUI example")
 
-To compile the program with GCC, I suggest using the following command: gcc -g3 ./src/*.c -I./src `pkg-config --cflags --libs gtk+-3.0`
+To compile the program with GCC, I suggest using the following command: gcc ./src/*.c -I./src `pkg-config --cflags --libs gtk+-3.0`
