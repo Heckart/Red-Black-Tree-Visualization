@@ -1,4 +1,4 @@
-#fndef RED_BLACK_TREE
+#ifndef RED_BLACK_TREE
 #define RED_BLACK_TREE
 
 #include <stdbool.h>
